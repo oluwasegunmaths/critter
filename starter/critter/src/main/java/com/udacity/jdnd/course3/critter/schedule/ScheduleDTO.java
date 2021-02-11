@@ -1,6 +1,9 @@
 package com.udacity.jdnd.course3.critter.schedule;
 
+import com.udacity.jdnd.course3.critter.pet.Pet;
+import com.udacity.jdnd.course3.critter.user.Employee;
 import com.udacity.jdnd.course3.critter.user.EmployeeSkill;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -47,5 +50,12 @@ public class ScheduleDTO {
 
     public void setActivities(Set<EmployeeSkill> activities) {
         this.activities = activities;
+    }
+    protected static Schedule toSchedule(ScheduleDTO scheduleDTO, List<Pet> pets, List<Employee> employees) {
+        Schedule schedule= new Schedule();
+        BeanUtils.copyProperties(scheduleDTO,schedule,"id","petIds","employeeIds");
+        schedule.setPetsScheduled(pets);
+        schedule.setEmployeesScheduled(employees);
+        return schedule;
     }
 }
